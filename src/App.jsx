@@ -79,14 +79,16 @@ export default function App() {
       scrollToResults();
     } catch (e) {
       const raw = e?.message || 'Não foi possível analisar agora. Tente de novo em instantes.';
-      const isKeyProblem = /leaked|API key|api key|API_KEY|permission denied|403/i.test(raw);
+      const isKeyProblem =
+        /leaked|expired|renew|API key|api key|API_KEY|permission denied|403/i.test(raw);
       const safariHint =
         isKeyProblem || raw.includes('Configure VITE_GEMINI_API_KEY')
           ? ''
           : ' Se o problema for o áudio no Safari, tente digitar a explicação ou usar Chrome.';
-      const keyHelp = raw.includes('leaked')
-        ? ' Crie uma chave nova em Google AI Studio, apague a antiga, coloque só em VITE_GEMINI_API_KEY no Netlify (sem commitar no Git) e faça um novo deploy.'
-        : '';
+      const keyHelp =
+        raw.includes('leaked') || raw.includes('expired') || raw.includes('renew')
+          ? ' Gere uma chave nova em https://aistudio.google.com/apikey , atualize VITE_GEMINI_API_KEY no Netlify e no .env local, e faça um novo deploy.'
+          : '';
       setError(`${raw}${keyHelp}${safariHint}`);
     } finally {
       setLoading(false);

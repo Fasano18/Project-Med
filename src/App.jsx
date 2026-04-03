@@ -41,7 +41,7 @@ export default function App() {
     const textoAlt = texto.trim();
 
     if (!getApiKey()) {
-      setError('Configure VITE_GEMINI_API_KEY no arquivo .env (copie de .env.example).');
+      setError('Coloque sua chave em GEMINI_API_KEY_INLINE em src/constants.js (ou use VITE_GEMINI_API_KEY).');
       return;
     }
 

@@ -12,7 +12,9 @@ function parseModelJson(text) {
 export async function callGemini({ temaText, textExplanation, audioBlob, audioMime }) {
   const GEMINI_API_KEY = getApiKey();
   if (!GEMINI_API_KEY) {
-    throw new Error('Defina GEMINI_API_KEY_INLINE em src/constants.js ou VITE_GEMINI_API_KEY no ambiente.');
+    throw new Error(
+      'Configure VITE_GEMINI_API_KEY no Netlify (Environment variables) ou no arquivo .env local.',
+    );
   }
 
   const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(GEMINI_API_KEY)}`;

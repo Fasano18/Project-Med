@@ -1,9 +1,3 @@
-/**
- * Chave da API embutida (uso pessoal). Em repo público, qualquer um pode copiar e usar sua cota.
- * Opcional: defina VITE_GEMINI_API_KEY no Netlify/.env para sobrescrever sem mudar o código.
- */
-export const GEMINI_API_KEY_INLINE = 'AIzaSyAtHSYFtZDx7q-h1QlZecQjQSDNhXmM5Ec';
-
 /** Modelo estável com suporte a áudio; 1.5-flash foi removido da API v1beta. */
 export const GEMINI_MODEL =
   typeof import.meta.env.VITE_GEMINI_MODEL === 'string' && import.meta.env.VITE_GEMINI_MODEL.trim()
@@ -47,11 +41,8 @@ Responda APENAS com o JSON válido, sem texto adicional, sem markdown.`;
 export const WELCOME_TEXT =
   'Olá, Anna ✨ Eu sou sua assistente de estudos, aqui para te ajudar a dominar a medicina!';
 
+/** Só via VITE_GEMINI_API_KEY (.env local ou variáveis do Netlify no build). Não commite chaves. */
 export function getApiKey() {
-  const fromEnv =
-    typeof import.meta.env.VITE_GEMINI_API_KEY === 'string'
-      ? import.meta.env.VITE_GEMINI_API_KEY.trim()
-      : '';
-  if (fromEnv) return fromEnv;
-  return typeof GEMINI_API_KEY_INLINE === 'string' ? GEMINI_API_KEY_INLINE.trim() : '';
+  const k = import.meta.env.VITE_GEMINI_API_KEY;
+  return typeof k === 'string' ? k.trim() : '';
 }

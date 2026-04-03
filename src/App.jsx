@@ -5,7 +5,6 @@ import { StudyResults } from './components/StudyResults';
 import { HistoryPanel } from './components/HistoryPanel';
 import { useAudioRecorder } from './hooks/useAudioRecorder';
 import { callGemini } from './api/gemini';
-import { getApiKey } from './constants';
 import { saveStudySession } from './utils/historyStorage';
 
 export default function App() {
@@ -40,13 +39,6 @@ export default function App() {
     const temaText = tema.trim();
     const textoAlt = texto.trim();
 
-    if (!getApiKey()) {
-      setError(
-        'Defina VITE_GEMINI_API_KEY no Netlify (Environment variables) ou no .env local e faça um novo deploy.',
-      );
-      return;
-    }
-
     let useAudio = false;
     let useText = false;
     if (mode === 'audio') {
@@ -79,23 +71,10 @@ export default function App() {
       scrollToResults();
     } catch (e) {
       const raw = e?.message || 'Não foi possível analisar agora. Tente de novo em instantes.';
-      const safariHint =
-        /leaked|expired|renew|API key|api key|API_KEY|permission denied|403/i.test(raw) ||
-        raw.includes('Configure VITE_GEMINI_API_KEY')
-          ? ''
-          : ' Se o problema for o áudio no Safari, tente digitar a explicação ou usar Chrome.';
-
-      if (/leaked/i.test(raw)) {
-        setError(
-          'A Google bloqueou esta chave (vazamento). Crie outra em aistudio.google.com/apikey, coloque em VITE_GEMINI_API_KEY no Netlify e no .env local, revogue a chave antiga e faça um novo deploy. Não commite a chave no Git.',
-        );
-      } else if (/expired|renew/i.test(raw)) {
-        setError(
-          'Chave expirada ou inválida. Gere uma nova em aistudio.google.com/apikey, atualize VITE_GEMINI_API_KEY no Netlify e no .env, e faça deploy de novo.',
-        );
-      } else {
-        setError(`${raw}${safariHint}`);
-      }
+      const safariHint = /permission denied|403/i.test(raw)
+        ? ''
+        : ' Se o problema for o áudio no Safari, tente digitar a explicação ou usar Chrome.';
+      setError(`${raw}${safariHint}`);
     } finally {
       setLoading(false);
     }

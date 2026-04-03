@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:netlify": "netlify dev",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "preview:netlify": "netlify dev --offline"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -14,6 +16,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
+    "netlify-cli": "^17.37.0",
     "vite": "^6.0.3"
   }
 }

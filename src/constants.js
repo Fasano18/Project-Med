@@ -1,8 +1,4 @@
-/** Modelo estável com suporte a áudio; 1.5-flash foi removido da API v1beta. */
-export const GEMINI_MODEL =
-  typeof import.meta.env.VITE_GEMINI_MODEL === 'string' && import.meta.env.VITE_GEMINI_MODEL.trim()
-    ? import.meta.env.VITE_GEMINI_MODEL.trim()
-    : 'gemini-2.5-flash';
+export const GEMINI_MODEL = 'gemini-2.5-flash';
 export const STORAGE_KEY = 'anna_estudos_historico';
 export const MAX_SESSIONS = 10;
 
@@ -42,9 +38,3 @@ Responda APENAS com o JSON válido, sem texto adicional, sem markdown.`;
 
 export const WELCOME_TEXT =
   'Olá, Anna ✨ Eu sou sua assistente de estudos, desenvolvida pelo seu namorado para te ajudar a estudar!';
-
-/** Só via VITE_GEMINI_API_KEY (.env local ou variáveis do Netlify no build). Não commite chaves. */
-export function getApiKey() {
-  const k = import.meta.env.VITE_GEMINI_API_KEY;
-  return typeof k === 'string' ? k.trim() : '';
-}

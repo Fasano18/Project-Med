@@ -79,17 +79,23 @@ export default function App() {
       scrollToResults();
     } catch (e) {
       const raw = e?.message || 'Não foi possível analisar agora. Tente de novo em instantes.';
-      const isKeyProblem =
-        /leaked|expired|renew|API key|api key|API_KEY|permission denied|403/i.test(raw);
       const safariHint =
-        isKeyProblem || raw.includes('Configure VITE_GEMINI_API_KEY')
+        /leaked|expired|renew|API key|api key|API_KEY|permission denied|403/i.test(raw) ||
+        raw.includes('Configure VITE_GEMINI_API_KEY')
           ? ''
           : ' Se o problema for o áudio no Safari, tente digitar a explicação ou usar Chrome.';
-      const keyHelp =
-        raw.includes('leaked') || raw.includes('expired') || raw.includes('renew')
-          ? ' Gere uma chave nova em https://aistudio.google.com/apikey , atualize VITE_GEMINI_API_KEY no Netlify e no .env local, e faça um novo deploy.'
-          : '';
-      setError(`${raw}${keyHelp}${safariHint}`);
+
+      if (/leaked/i.test(raw)) {
+        setError(
+          'A Google bloqueou esta chave (vazamento). Crie outra em aistudio.google.com/apikey, coloque em VITE_GEMINI_API_KEY no Netlify e no .env local, revogue a chave antiga e faça um novo deploy. Não commite a chave no Git.',
+        );
+      } else if (/expired|renew/i.test(raw)) {
+        setError(
+          'Chave expirada ou inválida. Gere uma nova em aistudio.google.com/apikey, atualize VITE_GEMINI_API_KEY no Netlify e no .env, e faça deploy de novo.',
+        );
+      } else {
+        setError(`${raw}${safariHint}`);
+      }
     } finally {
       setLoading(false);
     }

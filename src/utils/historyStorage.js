@@ -27,6 +27,7 @@ export function saveStudySession(payload) {
     topicos: payload.topicos,
     perguntas: payload.perguntas,
     resumo: payload.resumo,
+    prompt_mapa_mental: payload.prompt_mapa_mental,
   });
   writeHistory(sessions);
 }

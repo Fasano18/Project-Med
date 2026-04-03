@@ -49,6 +49,7 @@ export function HistoryPanel({ onSelectSession, refreshKey = 0, onCleared }) {
                         resumo: s.resumo,
                         topicos: s.topicos,
                         perguntas: s.perguntas,
+                        prompt_mapa_mental: s.prompt_mapa_mental,
                       })
                     }
                   >

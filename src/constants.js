@@ -39,7 +39,7 @@ Nunca inclua as respostas das perguntas na resposta.
 Responda APENAS com o JSON válido, sem texto adicional, sem markdown.`;
 
 export const WELCOME_TEXT =
-  'Olá, Anna ✨ Eu sou sua assistente de estudos, aqui para te ajudar a dominar a medicina!';
+  'Olá, Anna ✨ Eu sou sua assistente de estudos, desenvolvida pelo seu namorado para te ajudar a estudar!';
 
 /** Só via VITE_GEMINI_API_KEY (.env local ou variáveis do Netlify no build). Não commite chaves. */
 export function getApiKey() {
